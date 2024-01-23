@@ -32,12 +32,13 @@ public class UserService {
     }
     public User findByIdAndUpdate(long id, User body){
         User found = this.findById(id);
-        found.setName(body.getName());
-        found.setLastName(body.getLastName());
-        found.setUsername(body.getUsername());
-        found.setEmail(body.getEmail());
-        found.setAvatar(body.getAvatar());
-        found.setPassword(body.getPassword());
+        if (body.getName() != null) {found.setName(body.getName());}
+        if (body.getLastName() != null) {found.setLastName(body.getLastName());}
+        if (body.getUsername() != null) {found.setUsername(body.getUsername());}
+        if (body.getEmail() != null) {found.setEmail(body.getEmail());}
+        if (body.getAvatar() != null) {found.setAvatar(body.getAvatar());}
+        if (body.getPassword() != null) {found.setPassword(body.getPassword());}
+        if (body.getRole() != null) {found.setRole(body.getRole());}
         return userDAO.save(found);
     }
     public void findByIdAndDelete(int id){
