@@ -3,6 +3,7 @@ package pierpaolo.colasante.u5w2d5project.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,24 @@ public class UserController {
 //            return new UserResponseDTO(newUser.getId());
 //        }
 //    }
+    @GetMapping("/me")
+    public User getProfile(@AuthenticationPrincipal User currentUser) {
+        // @AuthenticationPrincipal permette di accedere ai dati dell'utente attualmente autenticato
+        // (perchè avevamo estratto l'id dal token e cercato l'utente nel db)
+        return currentUser;
+    }
+
+
+    @PutMapping("/me")
+    public User getMeAndUpdate(@AuthenticationPrincipal User currentUser, @RequestBody User body) {
+        return userService.findByIdAndUpdate(currentUser.getId(), body);
+    }
+
+    @DeleteMapping("/me")
+    public void getMeAnDelete(@AuthenticationPrincipal User currentUser) {
+        userService.findByIdAndDelete(currentUser.getId());
+    }
+
     @GetMapping("/{id}")
     public User findById(@PathVariable int id){return userService.findById(id);}
     @PutMapping("/{id}")
