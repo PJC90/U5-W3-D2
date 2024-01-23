@@ -17,8 +17,7 @@ import pierpaolo.colasante.u5w2d5project.services.UserService;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    @Autowired
-    UserService usersService;
+
     @Autowired
     private AuthService authService;
     @PostMapping("/login")
@@ -35,7 +34,7 @@ public class AuthController {
             System.out.println(validation.getAllErrors());
             throw new BadRequestException("Ci sono errori nel payload!"); // L'eccezione arriverà agli error handlers tra i quali c'è quello che manderà la risposta con status code 400
         } else {
-            User newUser = usersService.save(newUserPayload);
+            User newUser = authService.save(newUserPayload);
 //potrei mandare la mail di conferma di avvenuta registrazione
             return new UserResponseDTO(newUser.getId());
         }

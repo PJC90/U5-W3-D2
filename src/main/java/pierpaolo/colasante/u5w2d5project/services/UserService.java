@@ -22,19 +22,7 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
     public List<User> getUser(){return this.userDAO.findAll();}
-    public User save(UserDTO body){
-        userDAO.findByEmail(body.email()).ifPresent(user -> {throw new BadRequestException("email " + user.getEmail() + " già usata!!!");});
-        userDAO.findByUsername(body.username()).ifPresent(user -> {throw new BadRequestException("username " + user.getUsername() + " già in uso!!!");});
-        User newUser = new User();
-        newUser.setName(body.name());
-        newUser.setLastName(body.lastName());
-        newUser.setUsername(body.username());
-        newUser.setEmail(body.email());
-        newUser.setPassword(body.password());
-        newUser.setAvatar("https://ui-avatars.com/api/?name=" + body.name() + "+" + body.lastName());
-        newUser.setRole(Role.USER);
-        return userDAO.save(newUser);
-    }
+
     public User findById(long id){
         return userDAO.findById(id).orElseThrow(()->new NotFoundException(id));
     }
