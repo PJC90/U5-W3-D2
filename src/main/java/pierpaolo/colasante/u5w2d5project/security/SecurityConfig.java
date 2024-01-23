@@ -33,6 +33,9 @@ public class SecurityConfig {
         // in maniera che venga/non venga richiesta l'autenticazione per accedervi
         httpSecurity.authorizeHttpRequests(request -> request.requestMatchers("/**").permitAll());
 
+//        httpSecurity.authorizeHttpRequests(request -> request.requestMatchers( "/v3/**", "/swagger-ui/**").permitAll().anyRequest().authenticated());
+
+
         return httpSecurity.build();
     }
     @Bean

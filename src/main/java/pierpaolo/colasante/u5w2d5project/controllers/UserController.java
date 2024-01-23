@@ -56,6 +56,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public User findById(@PathVariable int id){return userService.findById(id);}
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -72,6 +73,14 @@ public class UserController {
     public User uploadAvatar(@RequestParam("avatar") MultipartFile file, @PathVariable int id)  {
         try {
             return userService.uploadPicture(id,file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @PostMapping("/me/upload")
+    public User uploadMeAvatar(@RequestParam("avatar") MultipartFile file, @AuthenticationPrincipal User currentUser)  {
+        try {
+            return userService.uploadPicture(currentUser.getId(),file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
