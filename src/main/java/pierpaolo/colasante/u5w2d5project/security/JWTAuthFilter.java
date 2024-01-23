@@ -44,7 +44,9 @@ public class JWTAuthFilter extends OncePerRequestFilter {
             User user = userService.findById(Long.parseLong(id));
 
             // 3.2 Informo Spring Security che l'utente è autenticato (se non faccio questo passaggio continuerò ad avere 403 come risposte)
-            Authentication authentication = new UsernamePasswordAuthenticationToken(user, null);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
+                    user.getAuthorities());
+            // OBBLIGATORIO aggiungere l'elenco ruoli se si vuole "attivare" il meccanismo di Autorizzazione
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // 3.3 Possiamo proseguire al prossimo elemento della chain (e prima o poi si arriverà al controller)

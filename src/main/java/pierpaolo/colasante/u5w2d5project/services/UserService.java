@@ -5,6 +5,7 @@ import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import pierpaolo.colasante.u5w2d5project.entities.Role;
 import pierpaolo.colasante.u5w2d5project.entities.User;
 import pierpaolo.colasante.u5w2d5project.exceptions.BadRequestException;
 import pierpaolo.colasante.u5w2d5project.exceptions.NotFoundException;
@@ -31,6 +32,7 @@ public class UserService {
         newUser.setEmail(body.email());
         newUser.setPassword(body.password());
         newUser.setAvatar("https://ui-avatars.com/api/?name=" + body.name() + "+" + body.lastName());
+        newUser.setRole(Role.USER);
         return userDAO.save(newUser);
     }
     public User findById(long id){
