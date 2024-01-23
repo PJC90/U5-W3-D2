@@ -36,11 +36,11 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority(this.role.name()));
     }
 
-    @Override
-    public String getUsername() {
-        // Ritorniamo l'email anche se l'ideale sarebbe username
-        return this.email;
-    }
+//    @Override
+//    public String getUsername() {
+//        // Ritorniamo l'email anche se l'ideale sarebbe username
+//        return this.email;
+//    }
 
     @Override
     public boolean isAccountNonExpired() {
